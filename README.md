@@ -6,9 +6,31 @@ A local-first web app that helps small businesses inventory their technology, ma
 
 Built for IT consultants, security professionals, and business owners who need a practical BCP/DR tool without enterprise pricing or complexity.
 
+## Screenshots
+
+**Dashboard** — At-a-glance view of backup coverage, critical issues, single points of failure, and key metrics.
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+**Dependency Map** — Interactive directed graph showing asset relationships. Click any node to simulate a failure and watch the cascade ripple downstream.
+
+![Dependency Map](docs/screenshots/dependencies-map.png)
+
+**Technology Assets** — Catalog of all technology assets with criticality levels, categories, and ownership tracking.
+
+![Assets](docs/screenshots/assets.png)
+
+**Backup Status** — Traffic-light tracking for every asset's backup state with coverage percentage.
+
+![Backup Status](docs/screenshots/backups.png)
+
+**Tabletop Scenarios** — Guided "what if" exercises with step-by-step facilitation and completion tracking.
+
+![Scenarios](docs/screenshots/scenarios.png)
+
 ## What It Does
 
-- **Asset Inventory** — Catalog your technology with 30+ pre-built templates (Google Workspace, QuickBooks, Shopify, Square POS, etc.) or add custom entries. Each asset tracks vendor info, support contacts, criticality level, and owner.
+- **Asset Inventory** — Catalog your technology with 36 pre-built templates (Google Workspace, QuickBooks, Shopify, Square POS, etc.) or add custom entries. Each asset tracks vendor info, support contacts, criticality level, and owner.
 
 - **Dependency Mapping** — Interactive directed graph showing what relies on what. Click any node to simulate a failure and watch the cascade ripple downstream. Identifies single points of failure automatically.
 
@@ -16,7 +38,7 @@ Built for IT consultants, security professionals, and business owners who need a
 
 - **Workflow Documentation** — Map business processes to the technology they depend on. Document max tolerable downtime, revenue impact, and manual workarounds (what can staff do with pen and paper?).
 
-- **Tabletop Scenarios** — Guided 7-step "what if" exercises: Setup, Impact Assessment, Immediate Response, Recovery Sequence, Backup Check, Gap Analysis, Action Items. Pre-built scenarios include ransomware, internet outage, server failure, key person departure, vendor shutdown, and more.
+- **Tabletop Scenarios** — Guided 7-step "what if" exercises: Setup, Impact, Response, Recovery, Backups, Gaps, Actions. Pre-built scenarios include ransomware, internet outage, email provider down, key person departure, vendor shutdown, payment processing failure, and office inaccessible.
 
 - **Recovery Plan Export** — Generate a printable PDF with asset inventory, dependency map, backup status, workflows, scenario playbooks, and contact directory. Also exports/imports JSON for data backup.
 
@@ -53,30 +75,31 @@ All data is stored in your browser's IndexedDB. Nothing is sent to any server. T
 | Layer | Technology |
 |-------|-----------|
 | Framework | React 19 + TypeScript |
-| Build | Vite |
-| UI | Tailwind CSS + Shadcn/ui |
+| Build | Vite 8 |
+| UI | Tailwind CSS 4 + Shadcn/ui (Base UI) |
 | Database | Dexie.js (IndexedDB) |
 | Graph | Cytoscape.js + dagre layout |
 | PDF | jsPDF + jspdf-autotable |
-| State | React hooks (useState, useMemo) |
+| State | React hooks + Dexie live queries |
 
-The main bundle is ~300KB gzipped. Cytoscape and jsPDF are code-split and only load when you visit those pages.
+Pages are lazy-loaded with React Suspense. Cytoscape and jsPDF are code-split and only load when you visit those pages.
 
 ## Project Structure
 
 ```
 src/
   components/
-    ui/           # Shadcn/ui components
-    HelpModal.tsx # Help & About dialog
+    ui/              # Shadcn/ui (Base UI) components
+    HelpModal.tsx    # Help & About dialog
   db/
-    database.ts   # Dexie.js schema
-    types.ts      # TypeScript interfaces
-    templates.ts  # Asset and scenario templates
+    database.ts      # Dexie.js schema
+    types.ts         # TypeScript interfaces
+    templates.ts     # Asset and scenario templates
     export-import.ts # JSON export/import
   lib/
     graph-engine.ts  # Cascade computation, topological sort, SPOF detection
     pdf-export.ts    # PDF recovery plan generation
+    utils.ts         # Tailwind class merging
   pages/
     DashboardPage.tsx
     AssetsPage.tsx
@@ -85,7 +108,8 @@ src/
     WorkflowsPage.tsx
     ScenariosPage.tsx
     DataPage.tsx
-  App.tsx         # Shell, routing, responsive sidebar
+  demo-data-loader.ts # Auto-loads demo data in demo mode
+  App.tsx              # Shell, routing, responsive sidebar
 ```
 
 ## Building for Production
@@ -99,6 +123,11 @@ Output goes to `dist/`. Serve with any static file server:
 ```bash
 npx serve dist
 ```
+
+Additional build modes:
+
+- `npm run build:standalone` — single-file build (all assets inlined) to `dist-standalone/`
+- `npm run build:demo` — demo mode build (import/export/clear disabled, demo data auto-loaded) to `dist-demo/`
 
 ## License
 
