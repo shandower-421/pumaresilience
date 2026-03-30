@@ -109,12 +109,21 @@ export function DependenciesPage() {
           style: {
             label: 'data(label)',
             'text-valign': 'bottom',
-            'text-margin-y': 6,
+            'text-margin-y': 8,
             'font-size': '11px',
+            'text-outline-color': '#ffffff',
+            'text-outline-width': 3,
+            'text-outline-opacity': 1,
+            'text-background-color': '#ffffff',
+            'text-background-opacity': 0.85,
+            'text-background-padding': '2px',
+            'text-background-shape': 'roundrectangle',
+            'text-max-width': '140px',
+            'text-wrap': 'wrap',
             'background-color': (ele: cytoscape.NodeSingular) =>
               critColors[ele.data('criticality')] ?? '#9ca3af',
-            width: 40,
-            height: 40,
+            width: 36,
+            height: 36,
             shape: (ele: cytoscape.NodeSingular) => {
               const cat = ele.data('category')
               if (cat === 'SaaS' || cat === 'Cloud') return 'round-rectangle'
@@ -125,6 +134,7 @@ export function DependenciesPage() {
             },
             'border-width': 2,
             'border-color': '#e5e7eb',
+            'z-index': 10,
           } as cytoscape.Css.Node,
         },
         {
@@ -132,7 +142,8 @@ export function DependenciesPage() {
           style: {
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier',
-            width: 2,
+            width: 1.5,
+            opacity: 0.6,
             'line-color': (ele: cytoscape.EdgeSingular) =>
               depStyles[ele.data('depType')]?.color ?? '#9ca3af',
             'target-arrow-color': (ele: cytoscape.EdgeSingular) =>
@@ -169,7 +180,9 @@ export function DependenciesPage() {
       layout: {
         name: 'dagre',
         rankDir: 'TB',
-        spacingFactor: 1.5,
+        spacingFactor: 1.8,
+        rankSep: 80,
+        nodeSep: 50,
       } as cytoscape.LayoutOptions,
     })
 
