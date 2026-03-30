@@ -1,0 +1,902 @@
+{
+  "version": "1.0.0",
+  "exportedAt": "2026-03-29T10:00:00.000Z",
+  "appName": "resilience",
+  "businessName": "Pawsitive Care Veterinary Group",
+  "assets": [
+    {
+      "id": "ast-internet",
+      "name": "Comcast Business Internet (Primary)",
+      "category": "Network",
+      "vendor": "Comcast Business",
+      "vendorSupportUrl": "https://business.comcast.com/support",
+      "vendorSupportPhone": "1-800-391-3000",
+      "criticality": "Critical",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "500 Mbps fiber. Account #: CB-2024-88712. Static IP block: 203.0.113.0/28. Contract renewal Nov 2026.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-internet-backup",
+      "name": "T-Mobile 5G Backup Internet",
+      "category": "Network",
+      "vendor": "T-Mobile Business",
+      "vendorSupportUrl": "https://www.t-mobile.com/business/support",
+      "vendorSupportPhone": "1-844-428-9675",
+      "criticality": "High",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "Automatic failover via Meraki MX. ~150 Mbps. Only activates when primary goes down.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-firewall",
+      "name": "Cisco Meraki MX68 Firewall/Router",
+      "category": "Network",
+      "vendor": "Cisco Meraki",
+      "vendorSupportUrl": "https://meraki.cisco.com/support",
+      "vendorSupportPhone": "1-415-632-5800",
+      "criticality": "Critical",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "Handles dual-WAN failover, VPN between clinic locations, VLAN segmentation for PCI compliance. License expires Dec 2026.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-wifi",
+      "name": "Meraki MR36 Wireless Access Points (x6)",
+      "category": "Network",
+      "vendor": "Cisco Meraki",
+      "vendorSupportUrl": "https://meraki.cisco.com/support",
+      "vendorSupportPhone": "1-415-632-5800",
+      "criticality": "High",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "3 per clinic location. Separate SSIDs for staff, medical devices, and guest. Managed via Meraki Dashboard.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-server",
+      "name": "Dell PowerEdge T350 (On-Prem Server)",
+      "category": "On-Prem",
+      "vendor": "Dell Technologies",
+      "vendorSupportUrl": "https://www.dell.com/support",
+      "vendorSupportPhone": "1-800-624-9896",
+      "criticality": "Critical",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "Runs the on-prem component of Cornerstone PIMS (veterinary practice management). Windows Server 2022. RAID 5 array. Located in server closet at Main St clinic. ProSupport Plus warranty until 2027.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-pims",
+      "name": "IDEXX Cornerstone PIMS",
+      "category": "SaaS",
+      "vendor": "IDEXX Laboratories",
+      "vendorSupportUrl": "https://www.idexx.com/en/veterinary/support/",
+      "vendorSupportPhone": "1-800-283-8386",
+      "criticality": "Critical",
+      "ownerName": "Dr. Sarah Okonkwo",
+      "ownerEmail": "sarah@pawsitivecare.vet",
+      "ownerPhone": "555-0102",
+      "notes": "Core veterinary practice management — patient records, appointments, treatment plans, prescriptions, invoicing. Hybrid deployment: on-prem database on Dell server + cloud sync for multi-location access. Contains all patient medical records (CRITICAL data).",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-labequip",
+      "name": "IDEXX In-House Lab Equipment",
+      "category": "Hardware",
+      "vendor": "IDEXX Laboratories",
+      "vendorSupportUrl": "https://www.idexx.com/en/veterinary/support/",
+      "vendorSupportPhone": "1-800-283-8386",
+      "criticality": "High",
+      "ownerName": "Dr. Sarah Okonkwo",
+      "ownerEmail": "sarah@pawsitivecare.vet",
+      "ownerPhone": "555-0102",
+      "notes": "Catalyst One chemistry analyzer, ProCyte Dx hematology, SediVue Dx urine analyzer. All feed results directly into Cornerstone PIMS. Requires network connectivity.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-xray",
+      "name": "Digital Radiography System (Sound-Eklin)",
+      "category": "Hardware",
+      "vendor": "Sound by IDEXX",
+      "vendorSupportUrl": "https://www.idexx.com/en/veterinary/support/",
+      "vendorSupportPhone": "1-800-268-6380",
+      "criticality": "High",
+      "ownerName": "Dr. James Park",
+      "ownerEmail": "james@pawsitivecare.vet",
+      "ownerPhone": "555-0103",
+      "notes": "Digital X-ray with PACS integration. Images stored on Dell server and synced to Cornerstone. Dedicated workstation in radiology room.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-google",
+      "name": "Google Workspace Business Plus",
+      "category": "SaaS",
+      "vendor": "Google",
+      "vendorSupportUrl": "https://support.google.com/a",
+      "vendorSupportPhone": "1-855-591-2382",
+      "criticality": "Critical",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "Gmail (pawsitivecare.vet domain), Google Drive (shared documents, SOPs, HR files), Google Calendar (staff scheduling), Google Meet (telemedicine consultations). 18 user licenses.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-phone",
+      "name": "RingCentral VoIP Phone System",
+      "category": "SaaS",
+      "vendor": "RingCentral",
+      "vendorSupportUrl": "https://support.ringcentral.com",
+      "vendorSupportPhone": "1-888-898-4591",
+      "criticality": "Critical",
+      "ownerName": "Lisa Nguyen",
+      "ownerEmail": "lisa@pawsitivecare.vet",
+      "ownerPhone": "555-0104",
+      "notes": "Main clinic phone lines, appointment reminders via SMS, after-hours emergency routing. 12 desk phones + mobile app for on-call vets. VoIP — requires internet.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-payment",
+      "name": "Square Terminal & POS",
+      "category": "Hardware",
+      "vendor": "Block (Square)",
+      "vendorSupportUrl": "https://squareup.com/help",
+      "vendorSupportPhone": "1-855-700-6000",
+      "criticality": "Critical",
+      "ownerName": "Lisa Nguyen",
+      "ownerEmail": "lisa@pawsitivecare.vet",
+      "ownerPhone": "555-0104",
+      "notes": "2 terminals (one per clinic). Processes credit/debit cards, Apple Pay, Google Pay. Offline mode can store up to ~24hrs of transactions. Syncs with QuickBooks.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-quickbooks",
+      "name": "QuickBooks Online Advanced",
+      "category": "SaaS",
+      "vendor": "Intuit",
+      "vendorSupportUrl": "https://quickbooks.intuit.com/support",
+      "vendorSupportPhone": "1-800-446-8848",
+      "criticality": "Critical",
+      "ownerName": "Lisa Nguyen",
+      "ownerEmail": "lisa@pawsitivecare.vet",
+      "ownerPhone": "555-0104",
+      "notes": "All accounting, payroll (18 employees), AP/AR, financial reporting. Integrated with Square POS and bank feeds. Lisa is the only person with admin access — this is a risk.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-website",
+      "name": "WordPress Website (hosted on WP Engine)",
+      "category": "Cloud",
+      "vendor": "WP Engine",
+      "vendorSupportUrl": "https://wpengine.com/support",
+      "vendorSupportPhone": "1-512-273-3906",
+      "criticality": "Medium",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "pawsitivecare.vet — public website with online appointment booking (PetDesk widget), service info, staff bios. Managed WordPress on WP Engine Growth plan.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-petdesk",
+      "name": "PetDesk (Client Communication Platform)",
+      "category": "SaaS",
+      "vendor": "PetDesk",
+      "vendorSupportUrl": "https://petdesk.com/support",
+      "vendorSupportPhone": "1-855-PET-DESK",
+      "criticality": "High",
+      "ownerName": "Lisa Nguyen",
+      "ownerEmail": "lisa@pawsitivecare.vet",
+      "ownerPhone": "555-0104",
+      "notes": "Online booking, automated appointment reminders (SMS + email), vaccination reminders, client mobile app. Integrates with Cornerstone PIMS for two-way appointment sync.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-controlled",
+      "name": "DEA Controlled Substance Log (Paper + Spreadsheet)",
+      "category": "Data Store",
+      "vendor": "",
+      "vendorSupportUrl": "",
+      "vendorSupportPhone": "",
+      "criticality": "Critical",
+      "ownerName": "Dr. Sarah Okonkwo",
+      "ownerEmail": "sarah@pawsitivecare.vet",
+      "ownerPhone": "555-0102",
+      "notes": "DEA-required log of all controlled substance usage (ketamine, butorphanol, etc). Paper log book in locked cabinet at each clinic + backup Google Sheet. REGULATORY REQUIREMENT — loss of this data is a compliance violation.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-workstations",
+      "name": "Staff Workstations (8x Dell OptiPlex)",
+      "category": "Hardware",
+      "vendor": "Dell Technologies",
+      "vendorSupportUrl": "https://www.dell.com/support",
+      "vendorSupportPhone": "1-800-624-9896",
+      "criticality": "High",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "4 per clinic. Front desk (2), exam rooms (1), back office (1). Windows 11 Pro, domain-joined. Cornerstone client installed locally.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-pwmanager",
+      "name": "1Password Business",
+      "category": "SaaS",
+      "vendor": "1Password",
+      "vendorSupportUrl": "https://support.1password.com",
+      "vendorSupportPhone": "",
+      "criticality": "High",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "Shared vaults for clinic credentials, vendor logins, Wi-Fi passwords. Marcus and Sarah are recovery admins.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "ast-surveillance",
+      "name": "Verkada Security Cameras",
+      "category": "Hardware",
+      "vendor": "Verkada",
+      "vendorSupportUrl": "https://www.verkada.com/support",
+      "vendorSupportPhone": "1-650-397-1553",
+      "criticality": "Low",
+      "ownerName": "Marcus Chen",
+      "ownerEmail": "marcus@pawsitivecare.vet",
+      "ownerPhone": "555-0101",
+      "notes": "6 cameras total (3 per clinic). Cloud-managed, 30-day local storage on camera + cloud backup. Covers entrances, controlled substance cabinet, and parking lot.",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "dep-01",
+      "upstreamAssetId": "ast-internet",
+      "downstreamAssetId": "ast-firewall",
+      "dependencyType": "Hard",
+      "description": "Firewall routes all traffic through primary internet connection",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-02",
+      "upstreamAssetId": "ast-internet-backup",
+      "downstreamAssetId": "ast-firewall",
+      "dependencyType": "Soft",
+      "description": "Firewall fails over to 5G backup when primary is down",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-03",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-wifi",
+      "dependencyType": "Hard",
+      "description": "All Wi-Fi traffic routes through firewall",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-04",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-server",
+      "dependencyType": "Soft",
+      "description": "Server uses firewall for internet access and cloud sync; can operate on LAN without it",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-05",
+      "upstreamAssetId": "ast-server",
+      "downstreamAssetId": "ast-pims",
+      "dependencyType": "Hard",
+      "description": "Cornerstone PIMS database runs on this server",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-06",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-pims",
+      "dependencyType": "Soft",
+      "description": "PIMS needs internet for cloud sync and multi-location access, but core functions work on LAN",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-07",
+      "upstreamAssetId": "ast-wifi",
+      "downstreamAssetId": "ast-labequip",
+      "dependencyType": "Hard",
+      "description": "Lab analyzers connect via Wi-Fi to push results to PIMS",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-08",
+      "upstreamAssetId": "ast-pims",
+      "downstreamAssetId": "ast-labequip",
+      "dependencyType": "Soft",
+      "description": "Lab results write to PIMS; analyzers still run without it but results must be recorded manually",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-09",
+      "upstreamAssetId": "ast-server",
+      "downstreamAssetId": "ast-xray",
+      "dependencyType": "Hard",
+      "description": "X-ray PACS images stored on server; can take images but cannot archive without server",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-10",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-google",
+      "dependencyType": "Hard",
+      "description": "Google Workspace requires internet connectivity",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-11",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-phone",
+      "dependencyType": "Hard",
+      "description": "VoIP phones require internet; no fallback to PSTN",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-12",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-payment",
+      "dependencyType": "Soft",
+      "description": "Square needs internet for real-time processing but has offline mode for ~24hrs",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-13",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-quickbooks",
+      "dependencyType": "Hard",
+      "description": "QuickBooks Online is entirely cloud-based",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-14",
+      "upstreamAssetId": "ast-payment",
+      "downstreamAssetId": "ast-quickbooks",
+      "dependencyType": "Soft",
+      "description": "Square transactions sync to QuickBooks; manual reconciliation possible if sync breaks",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-15",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-petdesk",
+      "dependencyType": "Hard",
+      "description": "PetDesk is cloud-only",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-16",
+      "upstreamAssetId": "ast-pims",
+      "downstreamAssetId": "ast-petdesk",
+      "dependencyType": "Soft",
+      "description": "PetDesk syncs appointments with Cornerstone; works independently but data may diverge",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-17",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-website",
+      "dependencyType": "Hard",
+      "description": "Website hosted externally but staff need internet to manage it",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-18",
+      "upstreamAssetId": "ast-petdesk",
+      "downstreamAssetId": "ast-website",
+      "dependencyType": "Soft",
+      "description": "PetDesk appointment widget embedded on website; site works without it but loses online booking",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-19",
+      "upstreamAssetId": "ast-google",
+      "downstreamAssetId": "ast-controlled",
+      "dependencyType": "Soft",
+      "description": "Controlled substance backup spreadsheet is on Google Drive; paper log is primary",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-20",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-workstations",
+      "dependencyType": "Soft",
+      "description": "Workstations use firewall for internet; still work on LAN for local Cornerstone access",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-21",
+      "upstreamAssetId": "ast-server",
+      "downstreamAssetId": "ast-workstations",
+      "dependencyType": "Soft",
+      "description": "Workstations connect to server for Cornerstone; can do other tasks without it",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-22",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-surveillance",
+      "dependencyType": "Soft",
+      "description": "Cameras need internet for cloud management and remote viewing; continue recording locally without it",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-23",
+      "upstreamAssetId": "ast-firewall",
+      "downstreamAssetId": "ast-pwmanager",
+      "dependencyType": "Soft",
+      "description": "1Password syncs via cloud; cached passwords work offline temporarily",
+      "createdAt": 1711500000000
+    },
+    {
+      "id": "dep-24",
+      "upstreamAssetId": "ast-pwmanager",
+      "downstreamAssetId": "ast-google",
+      "dependencyType": "Soft",
+      "description": "Staff use 1Password to log into Google; they can reset passwords without it but it is slow",
+      "createdAt": 1711500000000
+    }
+  ],
+  "backupInfos": [
+    {
+      "id": "bak-server",
+      "assetId": "ast-server",
+      "hasBackup": "Yes",
+      "backupMethod": "Self-managed",
+      "backupLocation": "Veeam backup to Synology NAS (on-site) + weekly offsite to Backblaze B2 bucket",
+      "backupFrequency": "Nightly incremental, weekly full",
+      "lastVerifiedDate": "2026-03-01",
+      "lastTestRestoreDate": "2026-01-15",
+      "restoreSteps": "1. Boot from Veeam recovery media on replacement server or bare metal\n2. Connect Synology NAS to the same network\n3. In Veeam recovery wizard, select the most recent restore point from the NAS\n4. Restore full system image to new hardware\n5. If NAS unavailable, download latest weekly full from Backblaze B2 (will take 4-6 hrs on good internet)\n6. Verify Cornerstone service starts and database is accessible\n7. Reconnect workstations to the new server IP if it changed\n8. Run Cornerstone data integrity check from admin console",
+      "estimatedRestoreTime": "2-4 hours from NAS, 6-10 hours from cloud"
+    },
+    {
+      "id": "bak-pims",
+      "assetId": "ast-pims",
+      "hasBackup": "Yes",
+      "backupMethod": "Self-managed",
+      "backupLocation": "Cornerstone database backed up as part of server backup (Veeam). IDEXX also maintains a cloud copy of synced data.",
+      "backupFrequency": "Nightly (via server backup) + real-time cloud sync during business hours",
+      "lastVerifiedDate": "2026-03-01",
+      "lastTestRestoreDate": "2026-01-15",
+      "restoreSteps": "1. Restore the Dell server from Veeam backup (see server restore steps)\n2. Cornerstone should come up automatically with the server\n3. If server restore is not possible, contact IDEXX support to get a cloud-only temporary instance\n4. IDEXX can provision a hosted Cornerstone within 24-48 hrs as emergency fallback\n5. After server restore, run IDEXX Data Sync to reconcile any cloud-side changes",
+      "estimatedRestoreTime": "Same as server restore; cloud-only fallback takes 24-48 hrs"
+    },
+    {
+      "id": "bak-google",
+      "assetId": "ast-google",
+      "hasBackup": "Yes",
+      "backupMethod": "Vendor-managed",
+      "backupLocation": "Google's infrastructure (multi-region). We also use Spanning Backup for Google Workspace for independent backup.",
+      "backupFrequency": "Real-time (Google) + 3x daily (Spanning)",
+      "lastVerifiedDate": "2026-02-15",
+      "lastTestRestoreDate": "2025-11-20",
+      "restoreSteps": "1. For deleted emails/files: use Google Admin console > Recovery tool (up to 25 days)\n2. For anything older or account-level recovery: log into Spanning Backup admin panel\n3. Select user(s) and date range to restore\n4. Spanning can restore to original location or download as files\n5. For full domain compromise: contact Google Workspace support for account recovery, then use Spanning to restore data",
+      "estimatedRestoreTime": "Minutes for individual items, 2-4 hours for full account restore"
+    },
+    {
+      "id": "bak-quickbooks",
+      "assetId": "ast-quickbooks",
+      "hasBackup": "Yes",
+      "backupMethod": "Vendor-managed",
+      "backupLocation": "Intuit cloud infrastructure",
+      "backupFrequency": "Real-time (Intuit-managed)",
+      "lastVerifiedDate": "2026-01-10",
+      "lastTestRestoreDate": "",
+      "restoreSteps": "1. QuickBooks Online data is Intuit-managed — we cannot independently restore\n2. Contact Intuit support for data recovery\n3. Lisa exports a full backup report monthly to Google Drive as a PDF safety net\n4. For payroll issues, contact Intuit Payroll support separately at 1-800-446-8848",
+      "estimatedRestoreTime": "Unknown — depends on Intuit support response time"
+    },
+    {
+      "id": "bak-payment",
+      "assetId": "ast-payment",
+      "hasBackup": "Yes",
+      "backupMethod": "Vendor-managed",
+      "backupLocation": "Square cloud infrastructure",
+      "backupFrequency": "Real-time",
+      "lastVerifiedDate": "2026-03-15",
+      "lastTestRestoreDate": "",
+      "restoreSteps": "1. Transaction data is in Square Dashboard — nothing to restore locally\n2. If terminal dies, swap with spare terminal from storage closet\n3. Log into Square Dashboard on new terminal with clinic credentials (in 1Password)\n4. If Square itself is down, accept cash/check only and reconcile later",
+      "estimatedRestoreTime": "15 minutes for terminal swap; Square outage is out of our control"
+    },
+    {
+      "id": "bak-controlled",
+      "assetId": "ast-controlled",
+      "hasBackup": "Yes",
+      "backupMethod": "Manual Export",
+      "backupLocation": "Primary: physical paper log in locked DEA cabinet at each clinic. Backup: Google Sheet on shared drive.",
+      "backupFrequency": "Paper log updated with every use. Google Sheet updated weekly by Dr. Okonkwo.",
+      "lastVerifiedDate": "2026-03-20",
+      "lastTestRestoreDate": "2026-03-20",
+      "restoreSteps": "1. Paper log IS the primary record — if lost, Google Sheet backup contains weekly totals\n2. If both lost, perform full physical inventory of all controlled substances\n3. Contact DEA Diversion Investigator (our field office: 555-0199) to report loss of records\n4. File incident report per DEA regulations within 24 hours",
+      "estimatedRestoreTime": "N/A for paper; Google Sheet is always available; physical recount takes 2-3 hours"
+    },
+    {
+      "id": "bak-website",
+      "assetId": "ast-website",
+      "hasBackup": "Yes",
+      "backupMethod": "Vendor-managed",
+      "backupLocation": "WP Engine automatic daily backups (30-day retention) + manual checkpoint before updates",
+      "backupFrequency": "Daily automatic",
+      "lastVerifiedDate": "2026-02-01",
+      "lastTestRestoreDate": "2025-12-10",
+      "restoreSteps": "1. Log into WP Engine portal\n2. Go to Backup Points for the pawsitivecare environment\n3. Select restore point and click 'Restore'\n4. WP Engine handles the restore — typically 10-15 minutes\n5. Verify site loads and PetDesk booking widget works",
+      "estimatedRestoreTime": "15-20 minutes"
+    },
+    {
+      "id": "bak-phone",
+      "assetId": "ast-phone",
+      "hasBackup": "No",
+      "backupMethod": "None",
+      "backupLocation": "",
+      "backupFrequency": "",
+      "lastVerifiedDate": "",
+      "lastTestRestoreDate": "",
+      "restoreSteps": "",
+      "estimatedRestoreTime": ""
+    },
+    {
+      "id": "bak-firewall",
+      "assetId": "ast-firewall",
+      "hasBackup": "Yes",
+      "backupMethod": "Vendor-managed",
+      "backupLocation": "Meraki Dashboard cloud (full config stored in cloud management platform)",
+      "backupFrequency": "Real-time (config changes auto-saved to Meraki cloud)",
+      "lastVerifiedDate": "2026-03-10",
+      "lastTestRestoreDate": "",
+      "restoreSteps": "1. If hardware dies, get replacement MX68 (Cisco Meraki will ship next-day with active support contract)\n2. Plug in new unit and connect to internet\n3. Log into Meraki Dashboard, claim the new device serial number\n4. Assign the old device's config to the new device\n5. All settings (VLANs, firewall rules, VPN, DHCP) restore automatically from cloud\n6. Swap patch cables to new device",
+      "estimatedRestoreTime": "1-2 days for hardware replacement; 30 minutes for config restore once in hand"
+    },
+    {
+      "id": "bak-petdesk",
+      "assetId": "ast-petdesk",
+      "hasBackup": "Unknown",
+      "backupMethod": "Unknown",
+      "backupLocation": "",
+      "backupFrequency": "",
+      "lastVerifiedDate": "",
+      "lastTestRestoreDate": "",
+      "restoreSteps": "",
+      "estimatedRestoreTime": ""
+    },
+    {
+      "id": "bak-pwmanager",
+      "assetId": "ast-pwmanager",
+      "hasBackup": "Yes",
+      "backupMethod": "Vendor-managed",
+      "backupLocation": "1Password cloud infrastructure + local device caches",
+      "backupFrequency": "Real-time sync",
+      "lastVerifiedDate": "2026-03-25",
+      "lastTestRestoreDate": "2026-02-01",
+      "restoreSteps": "1. If account locked out, use recovery key (stored in office safe and in Dr. Okonkwo's personal safe at home)\n2. Log into 1password.com with recovery key to regain admin access\n3. If vault data corrupted, 1Password support can restore from their backups (contact support)\n4. All staff have local caches that work offline temporarily",
+      "estimatedRestoreTime": "Minutes with recovery key; hours if 1Password support needed"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "wf-appointments",
+      "name": "Schedule & Manage Appointments",
+      "description": "Clients book appointments online or by phone. Staff manage the daily schedule, send reminders, and handle cancellations/rescheduling.",
+      "criticality": "Critical",
+      "maxTolerableDowntime": "2 hours during business hours",
+      "revenueImpactDescription": "~$200-400/hr in lost appointment revenue + client frustration and churn to competing clinics",
+      "manualWorkaround": "Paper appointment book kept at front desk as backup. Staff can take appointments by phone and write them down. Cannot send automated reminders — must call clients manually for next-day appointments.",
+      "assetIds": ["ast-pims", "ast-petdesk", "ast-phone", "ast-google", "ast-workstations"],
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "wf-patient-care",
+      "name": "Deliver Patient Care (Exams, Diagnosis, Treatment)",
+      "description": "Veterinarians examine patients, review medical history, order and review lab work/imaging, prescribe treatment, and document everything in the medical record.",
+      "criticality": "Critical",
+      "maxTolerableDowntime": "30 minutes — vets need patient history to safely prescribe",
+      "revenueImpactDescription": "Cannot see patients safely without medical records access. Direct revenue loss of $150-300 per appointment slot missed.",
+      "manualWorkaround": "Emergency-only: vets can perform basic exams and write paper records. Prescribing controlled substances requires checking the paper log. Lab work must be recorded manually and entered into PIMS later. X-rays can be taken but not archived digitally.",
+      "assetIds": ["ast-pims", "ast-server", "ast-labequip", "ast-xray", "ast-workstations", "ast-controlled"],
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "wf-billing",
+      "name": "Bill Clients & Process Payments",
+      "description": "Generate invoices from treatment records in PIMS, process card payments at checkout, reconcile daily totals, sync to QuickBooks.",
+      "criticality": "Critical",
+      "maxTolerableDowntime": "4 hours — can defer billing to end of day if needed",
+      "revenueImpactDescription": "Cannot collect payment = cannot close out visits. ~$3,000-5,000/day in deferred revenue if payment processing is completely down.",
+      "manualWorkaround": "Accept cash or check. Write manual invoices. Square terminals have offline mode for ~24hrs. Reconcile manually into QuickBooks when systems restore.",
+      "assetIds": ["ast-pims", "ast-payment", "ast-quickbooks", "ast-workstations"],
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "wf-payroll",
+      "name": "Run Biweekly Payroll",
+      "description": "Lisa processes payroll for 18 employees every two weeks through QuickBooks Payroll. Includes hourly time tracking, overtime calc, tax withholding, and direct deposit.",
+      "criticality": "Critical",
+      "maxTolerableDowntime": "24 hours — payroll must process by EOD on pay date",
+      "revenueImpactDescription": "Late payroll = labor law violation + severe employee morale damage. Could trigger DOL complaint.",
+      "manualWorkaround": "Lisa can manually calculate payroll from timesheets and issue checks from the business checking account. This has been done once before (2024 QuickBooks outage) and took ~6 hours for 18 employees.",
+      "assetIds": ["ast-quickbooks", "ast-google"],
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "wf-inventory",
+      "name": "Manage Pharmacy & Medical Supply Inventory",
+      "description": "Track medication levels, reorder from distributors, receive shipments, manage controlled substance log, handle prescription refills.",
+      "criticality": "High",
+      "maxTolerableDowntime": "1 business day",
+      "revenueImpactDescription": "Running out of critical meds could delay treatment. Controlled substance tracking gaps = DEA compliance risk.",
+      "manualWorkaround": "Physical count of inventory. Paper-based controlled substance log (already in use as primary). Can call distributors to order by phone. Manual prescription labels.",
+      "assetIds": ["ast-pims", "ast-controlled", "ast-server"],
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "wf-client-comm",
+      "name": "Client Communication (Non-Appointment)",
+      "description": "Respond to client calls and emails, send lab results, share post-visit instructions, handle prescription refill requests, manage client complaints.",
+      "criticality": "High",
+      "maxTolerableDowntime": "4 hours",
+      "revenueImpactDescription": "Poor communication drives clients to competitors. One bad Google review costs more than a day of downtime.",
+      "manualWorkaround": "Use personal cell phones for urgent calls. Post physical notice on clinic door if phones are down. Email can wait up to 4 hours without significant impact.",
+      "assetIds": ["ast-phone", "ast-google", "ast-petdesk", "ast-pims"],
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "scn-ransomware",
+      "name": "Ransomware Attack on Office Computers",
+      "scenarioType": "Ransomware",
+      "triggerDescription": "A staff member clicked a phishing link disguised as a pet food supplier invoice. By the time IT noticed, ransomware had encrypted all 8 workstations and the Dell server. The Cornerstone PIMS database is encrypted and inaccessible. Cloud services (Google, QuickBooks, PetDesk) appear unaffected, but you are not sure what credentials may have been stolen. The attackers are demanding 2 BTC (~$85,000).",
+      "initiallyAffectedAssetIds": ["ast-server", "ast-workstations", "ast-pims"],
+      "discussionPrompts": [
+        "Who do you call first? (IT, insurance, legal, law enforcement?)",
+        "Do you have offline backups that were not connected to the network?",
+        "Can the business operate using only phones and personal devices temporarily?",
+        "What customer data might be compromised, and who needs to be notified?",
+        "Do you have cyber insurance? Do you know how to file a claim?",
+        "What is your policy on paying the ransom?",
+        "How do you communicate this to customers and partners?"
+      ],
+      "recoverySteps": [
+        {
+          "id": "step-r1",
+          "stepNumber": 1,
+          "action": "IMMEDIATELY disconnect all affected systems from network — unplug ethernet cables and disable Wi-Fi on workstations",
+          "responsiblePerson": "Marcus Chen",
+          "estimatedDuration": "5 minutes",
+          "notes": "Do NOT shut down machines — forensics may need the running state"
+        },
+        {
+          "id": "step-r2",
+          "stepNumber": 2,
+          "action": "Call cyber insurance carrier (Hartford, policy #VET-2024-1122) to open a claim and get their incident response firm engaged",
+          "responsiblePerson": "Dr. Sarah Okonkwo",
+          "estimatedDuration": "30 minutes",
+          "notes": "Policy includes $50K incident response coverage. Do NOT start cleanup until insurer's IR firm is on the phone."
+        },
+        {
+          "id": "step-r3",
+          "stepNumber": 3,
+          "action": "Change all passwords for cloud services (Google Workspace admin, QuickBooks, PetDesk, Meraki, 1Password) from a CLEAN device (personal phone/laptop)",
+          "responsiblePerson": "Marcus Chen",
+          "estimatedDuration": "1 hour",
+          "notes": "Use 1Password recovery key from office safe to access vault if needed. Revoke all active sessions."
+        },
+        {
+          "id": "step-r4",
+          "stepNumber": 4,
+          "action": "Switch clinic to paper-only mode: pull out paper appointment book, manual invoices, and paper medical record forms from emergency supplies",
+          "responsiblePerson": "Lisa Nguyen",
+          "estimatedDuration": "15 minutes",
+          "notes": "Emergency paper forms are in the red binder in the front desk drawer. Printed copies of today's appointment schedule should be available from yesterday's end-of-day printout."
+        },
+        {
+          "id": "step-r5",
+          "stepNumber": 5,
+          "action": "Post notice for clients: 'Our computer systems are temporarily unavailable. We are still seeing patients. Please bear with us as we use paper records today.'",
+          "responsiblePerson": "Lisa Nguyen",
+          "estimatedDuration": "10 minutes",
+          "notes": ""
+        },
+        {
+          "id": "step-r6",
+          "stepNumber": 6,
+          "action": "Verify Veeam backup on Synology NAS is clean (was it connected during the attack?). Check Backblaze B2 for last known good weekly backup.",
+          "responsiblePerson": "Marcus Chen + IR firm",
+          "estimatedDuration": "2-4 hours",
+          "notes": "NAS is on a separate VLAN but still on the network — it MAY be compromised. Backblaze B2 backups are immutable and should be safe."
+        },
+        {
+          "id": "step-r7",
+          "stepNumber": 7,
+          "action": "Wipe and reimage all workstations from clean Windows images. Restore server from verified clean backup (Backblaze B2 if NAS is suspect).",
+          "responsiblePerson": "Marcus Chen + IR firm",
+          "estimatedDuration": "8-16 hours",
+          "notes": "Server restore from Backblaze will take 6-10 hours. Workstation reimaging can happen in parallel."
+        },
+        {
+          "id": "step-r8",
+          "stepNumber": 8,
+          "action": "Once systems are restored, enter all paper records from the incident period into Cornerstone PIMS",
+          "responsiblePerson": "Front desk staff",
+          "estimatedDuration": "4-8 hours",
+          "notes": "Every patient seen on paper must be reconciled. Assign one person per clinic to this task."
+        }
+      ],
+      "exerciseNotes": "EXERCISE COMPLETED 2026-02-20 with full staff.\n\nKEY FINDINGS:\n1. Marcus is the only person who knows how to restore from Veeam backup — this is a critical bus-factor risk. Lisa needs to be trained as backup.\n2. The Synology NAS is on the same network as workstations. Should be moved to an isolated backup VLAN or replaced with air-gapped offsite backup.\n3. Nobody knew the cyber insurance policy number or how to file a claim. Sarah has now saved it in 1Password.\n4. Paper emergency forms were out of date (old clinic name). Lisa has updated and reprinted them.\n5. Staff did not know to avoid shutting down computers during an active incident. Quick training note added to break room.\n\nACTION ITEMS:\n- [ ] Move NAS to isolated backup VLAN (Marcus, by April 15)\n- [ ] Train Lisa on Veeam restore procedure (Marcus, by April 1)\n- [ ] Enable immutable backups on Backblaze B2 (Marcus, done 2026-02-25)\n- [ ] Schedule annual phishing awareness training for all staff (Sarah, Q2)\n- [ ] Update emergency paper forms at both clinics (Lisa, done 2026-02-22)",
+      "status": "Completed",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "scn-server-failure",
+      "name": "Server Hardware Failure (Dell PowerEdge)",
+      "scenarioType": "Service Outage",
+      "triggerDescription": "Staff arrive Monday morning and the Dell PowerEdge T350 will not boot. The RAID controller is showing a critical error — two drives in the RAID 5 array have failed simultaneously (a RAID 5 double-disk failure). The server is completely dead. Cornerstone PIMS is inaccessible. Lab equipment cannot write results anywhere. X-ray images cannot be archived.",
+      "initiallyAffectedAssetIds": ["ast-server"],
+      "discussionPrompts": [
+        "How do staff communicate with customers right now?",
+        "Are there any time-sensitive emails (invoices, contracts, support tickets) that are stuck?",
+        "Do you have an alternative way to reach critical contacts?",
+        "How do you notify staff about the outage and the workaround plan?",
+        "What business processes are completely blocked without email?",
+        "When does this become a revenue problem?"
+      ],
+      "recoverySteps": [
+        {
+          "id": "step-s1",
+          "stepNumber": 1,
+          "action": "Confirm server is truly dead (check power, cables, try reboot). If RAID failure confirmed, do not attempt further — call Dell ProSupport.",
+          "responsiblePerson": "Marcus Chen",
+          "estimatedDuration": "30 minutes",
+          "notes": "ProSupport Plus includes next-business-day on-site hardware replacement"
+        },
+        {
+          "id": "step-s2",
+          "stepNumber": 2,
+          "action": "Call Dell ProSupport (1-800-624-9896), open hardware case. Service Tag is on the front of the server. Request emergency dispatch.",
+          "responsiblePerson": "Marcus Chen",
+          "estimatedDuration": "30 minutes",
+          "notes": ""
+        },
+        {
+          "id": "step-s3",
+          "stepNumber": 3,
+          "action": "Switch both clinics to paper mode for patient records. Today's schedule was printed last night — use that.",
+          "responsiblePerson": "Lisa Nguyen",
+          "estimatedDuration": "15 minutes",
+          "notes": ""
+        },
+        {
+          "id": "step-s4",
+          "stepNumber": 4,
+          "action": "Contact IDEXX to request emergency cloud-hosted Cornerstone instance as temporary fallback",
+          "responsiblePerson": "Dr. Sarah Okonkwo",
+          "estimatedDuration": "1 hour to initiate, 24-48 hrs to provision",
+          "notes": "This gives us read-only access to the last-synced patient records while we wait for server restore"
+        },
+        {
+          "id": "step-s5",
+          "stepNumber": 5,
+          "action": "When Dell replacement hardware arrives, restore full system from Veeam backup (Synology NAS first, Backblaze B2 if NAS fails)",
+          "responsiblePerson": "Marcus Chen",
+          "estimatedDuration": "4-8 hours",
+          "notes": ""
+        }
+      ],
+      "exerciseNotes": "EXERCISE COMPLETED 2026-03-10.\n\nKEY FINDINGS:\n1. Dell ProSupport Plus gets us next-business-day parts. If server dies Friday night, we could be down until Tuesday with Monday as a paper day.\n2. The IDEXX cloud fallback is read-only — vets can look up records but cannot write to them. This is better than nothing.\n3. Lab equipment and X-ray are completely useless without the server for archival. Vets said they can work around this for 1-2 days max.\n4. We should consider keeping a cold spare server or migrating to IDEXX's fully-hosted Cornerstone (significant cost increase but eliminates this risk).\n\nACTION ITEMS:\n- [ ] Get a quote from IDEXX for fully-hosted Cornerstone migration (Sarah, by May 1)\n- [ ] Investigate purchasing a cold spare server or at minimum spare RAID drives (Marcus, by April 15)",
+      "status": "Completed",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "scn-key-person",
+      "name": "Marcus (IT Person) Sudden Departure",
+      "scenarioType": "Key Person Loss",
+      "triggerDescription": "Marcus Chen, who set up and manages all the clinic's technology, has just accepted a job offer and is leaving in two weeks. He is cooperative but has limited time for knowledge transfer. He is the only person with admin access to the Meraki dashboard, the Dell server, the Veeam backups, and the Synology NAS. He also manages the Google Workspace admin console and the WP Engine hosting account.",
+      "initiallyAffectedAssetIds": ["ast-firewall", "ast-server", "ast-wifi", "ast-workstations"],
+      "discussionPrompts": [
+        "What accounts and systems does only this person have access to?",
+        "Are all passwords stored in a shared password manager, or in their head?",
+        "What vendor relationships do they manage that need to be transferred?",
+        "Is there documentation for the systems they built or maintain?",
+        "Who is the backup person for their responsibilities?",
+        "What needs to happen in the next 4 hours before they leave?"
+      ],
+      "recoverySteps": [
+        {
+          "id": "step-k1",
+          "stepNumber": 1,
+          "action": "Audit 1Password — verify ALL admin credentials are in shared vault, not Marcus's personal vault",
+          "responsiblePerson": "Dr. Sarah Okonkwo + Marcus",
+          "estimatedDuration": "2 hours",
+          "notes": ""
+        },
+        {
+          "id": "step-k2",
+          "stepNumber": 2,
+          "action": "Add Sarah as secondary admin on: Meraki Dashboard, Google Workspace, WP Engine, Veeam, Backblaze B2",
+          "responsiblePerson": "Marcus Chen",
+          "estimatedDuration": "1 hour",
+          "notes": ""
+        },
+        {
+          "id": "step-k3",
+          "stepNumber": 3,
+          "action": "Marcus documents the complete network topology, VLAN configuration, backup schedule, and server maintenance procedures in a Google Doc shared with Sarah and Lisa",
+          "responsiblePerson": "Marcus Chen",
+          "estimatedDuration": "4-8 hours over his remaining days",
+          "notes": ""
+        },
+        {
+          "id": "step-k4",
+          "stepNumber": 4,
+          "action": "Find and engage an MSP (managed service provider) for ongoing IT support before Marcus's last day",
+          "responsiblePerson": "Dr. Sarah Okonkwo",
+          "estimatedDuration": "1-2 weeks",
+          "notes": "Get quotes from at least 2 local MSPs. Budget ~$1,500-2,500/month for a practice this size."
+        }
+      ],
+      "exerciseNotes": "EXERCISE COMPLETED 2026-03-15.\n\nThis one hit home. We realized Marcus is a massive single point of failure for ALL technology. Even though credentials are in 1Password, nobody else knows how to actually use the Meraki dashboard, restore from Veeam, or troubleshoot server issues.\n\nKEY FINDINGS:\n1. Marcus's personal 1Password vault has 4 admin credentials NOT in the shared vault. Fixed during exercise.\n2. There is ZERO documentation for the network setup, backup procedures, or server maintenance.\n3. Lisa knows QuickBooks and Square but nothing about infrastructure.\n4. Dr. Okonkwo is technically capable but has no time for IT management.\n5. We need an MSP relationship regardless of whether Marcus stays or goes.\n\nACTION ITEMS:\n- [x] Move all admin creds from Marcus's personal vault to shared vault (done during exercise)\n- [ ] Marcus to create runbook documentation (started, target April 1)\n- [ ] Sarah to get MSP quotes (in progress, 2 consultations scheduled)\n- [ ] Cross-train Lisa on basic Meraki and Google Workspace admin tasks (Marcus, before departure if applicable)",
+      "status": "Completed",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    },
+    {
+      "id": "scn-internet-outage",
+      "name": "Full Internet Outage (Both Connections)",
+      "scenarioType": "Service Outage",
+      "triggerDescription": "A construction crew has severed the fiber line on your block. Comcast says repair will take 12-18 hours. Unusually, T-Mobile 5G service in your area is also degraded due to a tower outage — the Meraki shows the backup connection at <1 Mbps, effectively unusable. You have no functional internet at either clinic location.",
+      "initiallyAffectedAssetIds": ["ast-internet", "ast-internet-backup"],
+      "discussionPrompts": [
+        "Which of your tools still work without internet? Which are dead?",
+        "Can staff use mobile hotspots to access critical cloud services?",
+        "Is there a nearby location (co-working space, coffee shop) where staff could work?",
+        "What happens to phone systems if they are VoIP?",
+        "Can you process payments if the POS needs internet?",
+        "Should you close for the day or try to operate in a degraded state?"
+      ],
+      "recoverySteps": [],
+      "exerciseNotes": "",
+      "status": "Not Started",
+      "createdAt": 1711500000000,
+      "updatedAt": 1711500000000
+    }
+  ]
+}
