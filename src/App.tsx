@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState } from 'react'
-import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import {
   Sheet,
@@ -17,6 +17,7 @@ import {
   Lock,
   Menu,
   X,
+  Info,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { HelpModal } from '@/components/HelpModal'
@@ -89,7 +90,14 @@ function AppContent() {
         Skip to main content
       </a>
 
-      <div className="flex h-screen bg-background">
+      {__DEMO_MODE__ && (
+        <div className="bg-amber-100 text-amber-900 px-4 py-2 text-center text-sm font-medium flex items-center justify-center gap-2">
+          <Info className="h-4 w-4 shrink-0" />
+          Demo Mode — Sample data pre-loaded. Import/export/clear disabled.
+        </div>
+      )}
+
+      <div className={`flex bg-background ${__DEMO_MODE__ ? 'h-[calc(100vh-40px)]' : 'h-screen'}`}>
         {/* Desktop sidebar */}
         <nav
           className="hidden lg:flex w-56 bg-sidebar text-sidebar-foreground flex-col shrink-0"
@@ -197,10 +205,11 @@ function AppContent() {
 }
 
 function App() {
+  const Router = __STANDALONE_MODE__ ? HashRouter : BrowserRouter
   return (
-    <BrowserRouter>
+    <Router>
       <AppContent />
-    </BrowserRouter>
+    </Router>
   )
 }
 

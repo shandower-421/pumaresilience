@@ -39,7 +39,7 @@ import {
   DialogTitle as ConfirmTitle,
   DialogDescription as ConfirmDesc,
 } from '@/components/ui/dialog'
-import { Plus, Trash2, ZapOff, RotateCcw, Info } from 'lucide-react'
+import { Plus, Trash2, ZapOff, RotateCcw, Info, ArrowUpDown, Search, X } from 'lucide-react'
 
 dagre(cytoscape)
 
@@ -66,6 +66,10 @@ export function DependenciesPage() {
   const [depDesc, setDepDesc] = useState('')
   const [failedAsset, setFailedAsset] = useState<string | null>(null)
   const [deleteDepId, setDeleteDepId] = useState<string | null>(null)
+  const [filterAsset, setFilterAsset] = useState('')
+  const [filterType, setFilterType] = useState<'' | DependencyType>('')
+  const [sortCol, setSortCol] = useState<'upstream' | 'downstream' | 'type'>('upstream')
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
 
   const graphRef = useRef<HTMLDivElement>(null)
   const cyRef = useRef<cytoscape.Core | null>(null)
@@ -236,6 +240,30 @@ export function DependenciesPage() {
     ? computeCascade([failedAsset], assets, dependencies)
     : null
 
+  const assetName = (id: string) => assets.find((a) => a.id === id)?.name ?? ''
+
+  const filteredDeps = dependencies
+    .filter((dep) => {
+      if (filterAsset && dep.upstreamAssetId !== filterAsset && dep.downstreamAssetId !== filterAsset) return false
+      if (filterType && dep.dependencyType !== filterType) return false
+      return true
+    })
+    .sort((a, b) => {
+      let aVal = '', bVal = ''
+      if (sortCol === 'upstream') { aVal = assetName(a.upstreamAssetId); bVal = assetName(b.upstreamAssetId) }
+      else if (sortCol === 'downstream') { aVal = assetName(a.downstreamAssetId); bVal = assetName(b.downstreamAssetId) }
+      else { aVal = a.dependencyType; bVal = b.dependencyType }
+      const cmp = aVal.localeCompare(bVal)
+      return sortDir === 'asc' ? cmp : -cmp
+    })
+
+  function toggleSort(col: 'upstream' | 'downstream' | 'type') {
+    if (sortCol === col) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
+    else { setSortCol(col); setSortDir('asc') }
+  }
+
+  const hasFilters = filterAsset !== '' || filterType !== ''
+
   return (
     <div className="p-4 sm:p-6 lg:p-8 space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -272,115 +300,212 @@ export function DependenciesPage() {
           </CardHeader>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2">
-            <Card>
-              <CardContent className="p-0">
-                <div className="relative">
-                  <div
-                    ref={graphRef}
-                    className="w-full h-[500px] bg-muted/30 rounded-md"
-                  />
-                  {!failedAsset && (
-                    <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-background/90 backdrop-blur-sm text-xs text-muted-foreground px-2.5 py-1.5 rounded-md border shadow-sm">
-                      <Info className="h-3 w-3" />
-                      Click any node to simulate a failure
-                    </div>
-                  )}
-                </div>
+        <div className="space-y-4">
+          <Card>
+            <CardContent className="p-0">
+              <div className="relative">
+                <div
+                  ref={graphRef}
+                  className="w-full h-[500px] bg-muted/30 rounded-md"
+                />
+                {!failedAsset && (
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-background/90 backdrop-blur-sm text-xs text-muted-foreground px-2.5 py-1.5 rounded-md border shadow-sm">
+                    <Info className="h-3 w-3" />
+                    Click any node to simulate a failure
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Cascade info panel */}
+          {failedAssetObj && cascadeResult && (
+            <Card className="border-red-200">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <ZapOff className="h-4 w-4 text-red-500" />
+                  Failure Simulation: {failedAssetObj.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-2">
+                  {cascadeResult.affectedAssetIds.length - 1} downstream
+                  asset(s) affected across {cascadeResult.phases.length - 1}{' '}
+                  cascade phase(s).
+                </p>
+                {cascadeResult.phases.slice(1).map((phase) => (
+                  <div key={phase.phase} className="mb-1">
+                    <span className="text-xs font-medium">
+                      Phase {phase.phase}:{' '}
+                    </span>
+                    {phase.assetIds.map((id) => {
+                      const a = assets.find((x) => x.id === id)
+                      return (
+                        <Badge
+                          key={id}
+                          variant="secondary"
+                          className="text-xs mr-1"
+                        >
+                          {a?.name ?? id}
+                        </Badge>
+                      )
+                    })}
+                  </div>
+                ))}
               </CardContent>
             </Card>
+          )}
 
-            {/* Cascade info panel */}
-            {failedAssetObj && cascadeResult && (
-              <Card className="mt-4 border-red-200">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2">
-                    <ZapOff className="h-4 w-4 text-red-500" />
-                    Failure Simulation: {failedAssetObj.name}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    {cascadeResult.affectedAssetIds.length - 1} downstream
-                    asset(s) affected across {cascadeResult.phases.length - 1}{' '}
-                    cascade phase(s).
-                  </p>
-                  {cascadeResult.phases.slice(1).map((phase) => (
-                    <div key={phase.phase} className="mb-1">
-                      <span className="text-xs font-medium">
-                        Phase {phase.phase}:{' '}
-                      </span>
-                      {phase.assetIds.map((id) => {
-                        const a = assets.find((x) => x.id === id)
-                        return (
-                          <Badge
-                            key={id}
-                            variant="secondary"
-                            className="text-xs mr-1"
+          {/* Dependencies table */}
+          <Card>
+            <CardHeader className="pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <CardTitle className="text-sm shrink-0">
+                  Dependencies ({dependencies.length})
+                </CardTitle>
+                {dependencies.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2 ml-auto">
+                    <Select
+                      value={filterAsset || 'all'}
+                      onValueChange={(v) => setFilterAsset(!v || v === 'all' ? '' : v)}
+                    >
+                      <SelectTrigger className="h-8 text-xs w-[200px]">
+                        <Search className="h-3 w-3 mr-1.5 shrink-0 text-muted-foreground" />
+                        <span className="truncate">
+                          {filterAsset ? assetName(filterAsset) : 'All assets'}
+                        </span>
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All assets</SelectItem>
+                        {assets
+                          .filter((a) => dependencies.some((d) => d.upstreamAssetId === a.id || d.downstreamAssetId === a.id))
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map((a) => (
+                            <SelectItem key={a.id} value={a.id}>{a.name}</SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                    <Select value={filterType || 'all'} onValueChange={(v) => setFilterType(!v || v === 'all' ? '' : v as DependencyType)}>
+                      <SelectTrigger className="h-8 text-xs w-[120px]">
+                        <SelectValue placeholder="All types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All types</SelectItem>
+                        <SelectItem value="Hard">Hard</SelectItem>
+                        <SelectItem value="Soft">Soft</SelectItem>
+                        <SelectItem value="Optional">Optional</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {hasFilters && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 px-2 text-xs text-muted-foreground"
+                        onClick={() => { setFilterAsset(''); setFilterType('') }}
+                      >
+                        <X className="h-3 w-3 mr-1" />
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0">
+              {dependencies.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No dependencies mapped yet.
+                </p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b text-left text-muted-foreground">
+                        <th className="pb-2 pr-3 font-medium">
+                          <button
+                            onClick={() => toggleSort('upstream')}
+                            className="flex items-center gap-1 hover:text-foreground transition-colors"
                           >
-                            {a?.name ?? id}
-                          </Badge>
-                        )
-                      })}
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Dependencies list */}
-          <div className="space-y-3">
-            <h2 className="text-sm font-semibold">
-              Dependencies ({dependencies.length})
-            </h2>
-            {dependencies.length === 0 ? (
-              <p className="text-xs text-muted-foreground">
-                No dependencies mapped yet.
-              </p>
-            ) : (
-              dependencies.map((dep) => {
-                const up = assets.find((a) => a.id === dep.upstreamAssetId)
-                const down = assets.find(
-                  (a) => a.id === dep.downstreamAssetId
-                )
-                return (
-                  <Card key={dep.id} className="text-xs">
-                    <CardContent className="pt-3 pb-3">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="font-medium">{up?.name}</span>
-                          <span className="text-muted-foreground"> → </span>
-                          <span className="font-medium">{down?.name}</span>
-                          <Badge
-                            variant="outline"
-                            className="text-[10px] ml-2"
+                            Upstream
+                            <ArrowUpDown className={`h-3 w-3 ${sortCol === 'upstream' ? 'text-foreground' : 'opacity-40'}`} />
+                          </button>
+                        </th>
+                        <th className="pb-2 pr-3 font-medium" aria-label="arrow"></th>
+                        <th className="pb-2 pr-3 font-medium">
+                          <button
+                            onClick={() => toggleSort('downstream')}
+                            className="flex items-center gap-1 hover:text-foreground transition-colors"
                           >
-                            {dep.dependencyType}
-                          </Badge>
-                          {dep.description && (
-                            <p className="text-muted-foreground mt-0.5">
-                              {dep.description}
-                            </p>
-                          )}
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setDeleteDepId(dep.id)}
-                          aria-label="Remove dependency"
-                          className="hover:text-red-600"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })
-            )}
-          </div>
+                            Downstream
+                            <ArrowUpDown className={`h-3 w-3 ${sortCol === 'downstream' ? 'text-foreground' : 'opacity-40'}`} />
+                          </button>
+                        </th>
+                        <th className="pb-2 pr-3 font-medium">
+                          <button
+                            onClick={() => toggleSort('type')}
+                            className="flex items-center gap-1 hover:text-foreground transition-colors"
+                          >
+                            Type
+                            <ArrowUpDown className={`h-3 w-3 ${sortCol === 'type' ? 'text-foreground' : 'opacity-40'}`} />
+                          </button>
+                        </th>
+                        <th className="pb-2 pr-3 font-medium hidden sm:table-cell">Description</th>
+                        <th className="pb-2 font-medium w-10"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredDeps.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="py-6 text-center text-muted-foreground">
+                            No dependencies match the current filters.
+                          </td>
+                        </tr>
+                      ) : (
+                        filteredDeps.map((dep) => {
+                          const up = assets.find((a) => a.id === dep.upstreamAssetId)
+                          const down = assets.find((a) => a.id === dep.downstreamAssetId)
+                          return (
+                            <tr
+                              key={dep.id}
+                              className="border-b last:border-0 hover:bg-muted/50 transition-colors"
+                            >
+                              <td className="py-2 pr-3 font-medium">{up?.name}</td>
+                              <td className="py-2 pr-3 text-muted-foreground">→</td>
+                              <td className="py-2 pr-3 font-medium">{down?.name}</td>
+                              <td className="py-2 pr-3">
+                                <Badge variant="outline" className="text-[10px]">
+                                  {dep.dependencyType}
+                                </Badge>
+                              </td>
+                              <td className="py-2 pr-3 text-muted-foreground hidden sm:table-cell max-w-xs truncate">
+                                {dep.description || '—'}
+                              </td>
+                              <td className="py-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setDeleteDepId(dep.id)}
+                                  aria-label="Remove dependency"
+                                  className="hover:text-red-600 h-7 w-7 p-0"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              </td>
+                            </tr>
+                          )
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                  {hasFilters && filteredDeps.length > 0 && (
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Showing {filteredDeps.length} of {dependencies.length} dependencies
+                    </p>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       )}
 

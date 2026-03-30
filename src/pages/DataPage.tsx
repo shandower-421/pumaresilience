@@ -207,6 +207,7 @@ export function DataPage() {
       </Card>
 
       {/* Export */}
+      {!__DEMO_MODE__ && (
       <Card>
         <CardHeader>
           <CardTitle className="text-sm">Export Data</CardTitle>
@@ -230,6 +231,7 @@ export function DataPage() {
           </Button>
         </CardContent>
       </Card>
+      )}
 
       {/* PDF Export */}
       <Card>
@@ -254,6 +256,7 @@ export function DataPage() {
       </Card>
 
       {/* Import */}
+      {!__DEMO_MODE__ && (
       <Card>
         <CardHeader>
           <CardTitle className="text-sm">Import Data</CardTitle>
@@ -276,8 +279,10 @@ export function DataPage() {
           </Button>
         </CardContent>
       </Card>
+      )}
 
       {/* Clear */}
+      {!__DEMO_MODE__ && (
       <Card className="border-red-200">
         <CardHeader>
           <CardTitle className="text-sm text-red-600">Clear All Data</CardTitle>
@@ -297,6 +302,7 @@ export function DataPage() {
           </Button>
         </CardContent>
       </Card>
+      )}
 
       {/* Import confirmation */}
       <Dialog open={showImportConfirm} onOpenChange={setShowImportConfirm}>
